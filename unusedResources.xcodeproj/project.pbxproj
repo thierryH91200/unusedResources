@@ -12,6 +12,11 @@
 		0300B0532163B0EB00F19655 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0300B0512163B0EB00F19655 /* MainMenu.xib */; };
 		0300B05F2163B0EB00F19655 /* unusedResourcesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0300B05E2163B0EB00F19655 /* unusedResourcesTests.swift */; };
 		0300B06A2163B0EB00F19655 /* unusedResourcesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0300B0692163B0EB00F19655 /* unusedResourcesUITests.swift */; };
+		0300B07A2163B14B00F19655 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0300B0782163B14B00F19655 /* MainWindowController.swift */; };
+		0300B07C2163BAAC00F19655 /* Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0300B07B2163BAAC00F19655 /* Searcher.swift */; };
+		0300B07E2163C5EF00F19655 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0300B07D2163C5EF00F19655 /* FileUtil.swift */; };
+		03702D9D21676F4A0014CB2E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03702D9F21676F4A0014CB2E /* Localizable.strings */; };
+		03702DA2216770700014CB2E /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03702DA4216770700014CB2E /* MainWindowController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +49,15 @@
 		0300B0652163B0EB00F19655 /* unusedResourcesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = unusedResourcesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0300B0692163B0EB00F19655 /* unusedResourcesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = unusedResourcesUITests.swift; sourceTree = "<group>"; };
 		0300B06B2163B0EB00F19655 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0300B0782163B14B00F19655 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		0300B07B2163BAAC00F19655 /* Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searcher.swift; sourceTree = "<group>"; };
+		0300B07D2163C5EF00F19655 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
+		03702D9E21676F4A0014CB2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		03702DA021676F600014CB2E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		03702DA121676F610014CB2E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		03702DA3216770700014CB2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainWindowController.xib; sourceTree = "<group>"; };
+		03702DA6216770780014CB2E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainWindowController.strings; sourceTree = "<group>"; };
+		03702DA8216770790014CB2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainWindowController.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,10 +109,15 @@
 			isa = PBXGroup;
 			children = (
 				0300B04D2163B0EA00F19655 /* AppDelegate.swift */,
+				03702D9F21676F4A0014CB2E /* Localizable.strings */,
 				0300B04F2163B0EB00F19655 /* Assets.xcassets */,
 				0300B0512163B0EB00F19655 /* MainMenu.xib */,
 				0300B0542163B0EB00F19655 /* Info.plist */,
 				0300B0552163B0EB00F19655 /* unusedResources.entitlements */,
+				03702DA4216770700014CB2E /* MainWindowController.xib */,
+				0300B0782163B14B00F19655 /* MainWindowController.swift */,
+				0300B07B2163BAAC00F19655 /* Searcher.swift */,
+				0300B07D2163C5EF00F19655 /* FileUtil.swift */,
 			);
 			path = unusedResources;
 			sourceTree = "<group>";
@@ -189,6 +208,11 @@
 				TargetAttributes = {
 					0300B0492163B0EA00F19655 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 					0300B0592163B0EB00F19655 = {
 						CreatedOnToolsVersion = 10.1;
@@ -207,6 +231,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 0300B0412163B0EA00F19655;
 			productRefGroup = 0300B04B2163B0EA00F19655 /* Products */;
@@ -226,6 +251,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0300B0502163B0EB00F19655 /* Assets.xcassets in Resources */,
+				03702D9D21676F4A0014CB2E /* Localizable.strings in Resources */,
+				03702DA2216770700014CB2E /* MainWindowController.xib in Resources */,
 				0300B0532163B0EB00F19655 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,7 +278,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0300B07A2163B14B00F19655 /* MainWindowController.swift in Sources */,
 				0300B04E2163B0EA00F19655 /* AppDelegate.swift in Sources */,
+				0300B07C2163BAAC00F19655 /* Searcher.swift in Sources */,
+				0300B07E2163C5EF00F19655 /* FileUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,8 +321,28 @@
 			isa = PBXVariantGroup;
 			children = (
 				0300B0522163B0EB00F19655 /* Base */,
+				03702DA021676F600014CB2E /* fr */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		03702D9F21676F4A0014CB2E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03702D9E21676F4A0014CB2E /* en */,
+				03702DA121676F610014CB2E /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		03702DA4216770700014CB2E /* MainWindowController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03702DA3216770700014CB2E /* Base */,
+				03702DA6216770780014CB2E /* fr */,
+				03702DA8216770790014CB2E /* en */,
+			);
+			name = MainWindowController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -302,6 +352,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -363,6 +414,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -417,7 +469,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = unusedResources/unusedResources.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = unusedResources/Info.plist;
@@ -435,7 +486,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = unusedResources/unusedResources.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = unusedResources/Info.plist;

@@ -1,0 +1,84 @@
+
+/* Class = "NSButtonCell"; title = ".m"; ObjectID = "3QG-WJ-WlT"; */
+"3QG-WJ-WlT.title" = ".m";
+
+/* Class = "NSButtonCell"; title = "Browse.."; ObjectID = "6zb-g2-oGW"; */
+"6zb-g2-oGW.title" = "Browse..";
+
+/* Class = "NSButtonCell"; title = ".cpp"; ObjectID = "81E-fh-kWo"; */
+"81E-fh-kWo.title" = ".cpp";
+
+/* Class = "NSButtonCell"; title = ".plist"; ObjectID = "Bsr-CM-o5B"; */
+"Bsr-CM-o5B.title" = ".plist";
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "F0z-JX-Cv5"; */
+"F0z-JX-Cv5.title" = "Window";
+
+/* Class = "NSButtonCell"; title = ".css"; ObjectID = "FEP-1x-Y3M"; */
+"FEP-1x-Y3M.title" = ".css";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "H24-BI-fos"; */
+"H24-BI-fos.title" = "Table View Cell";
+
+/* Class = "NSTableColumn"; headerCell.title = "Image Name"; ObjectID = "JIJ-Pa-xe7"; */
+"JIJ-Pa-xe7.headerCell.title" = "Image Name";
+
+/* Class = "NSTableColumn"; headerCell.title = "Full Path"; ObjectID = "Kcr-SA-jF6"; */
+"Kcr-SA-jF6.headerCell.title" = "Full Path";
+
+/* Class = "NSTextFieldCell"; title = "Folder"; ObjectID = "UQK-xo-ogV"; */
+"UQK-xo-ogV.title" = "Folder";
+
+/* Class = "NSButtonCell"; title = ".swift"; ObjectID = "WgT-Vd-SHK"; */
+"WgT-Vd-SHK.title" = ".swift";
+
+/* Class = "NSButtonCell"; title = "Enum Variants"; ObjectID = "XEu-UU-zOd"; */
+"XEu-UU-zOd.title" = "Enum Variants";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "YZe-B7-vVC"; */
+"YZe-B7-vVC.title" = "Table View Cell";
+
+/* Class = "NSButtonCell"; title = "Export"; ObjectID = "ZU7-Gg-vEm"; */
+"ZU7-Gg-vEm.title" = "Export";
+
+/* Class = "NSButtonCell"; title = ".storyboard"; ObjectID = "Zg4-u6-Yp6"; */
+"Zg4-u6-Yp6.title" = ".storyboard";
+
+/* Class = "NSButtonCell"; title = ".html"; ObjectID = "aTe-ua-Ec9"; */
+"aTe-ua-Ec9.title" = ".html";
+
+/* Class = "NSButtonCell"; title = ".h"; ObjectID = "dDg-fj-Xov"; */
+"dDg-fj-Xov.title" = ".h";
+
+/* Class = "NSButtonCell"; title = ".xib"; ObjectID = "dTW-hD-Loq"; */
+"dTW-hD-Loq.title" = ".xib";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "hV2-rv-HqK"; */
+"hV2-rv-HqK.title" = "Text Cell";
+
+/* Class = "NSTextFieldCell"; title = "Project"; ObjectID = "hqq-Tw-gdd"; */
+"hqq-Tw-gdd.title" = "Project";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "iWV-3M-Ti3"; */
+"iWV-3M-Ti3.title" = "Text Cell";
+
+/* Class = "NSTextFieldCell"; title = "Results"; ObjectID = "le2-yp-P2u"; */
+"le2-yp-P2u.title" = "Results";
+
+/* Class = "NSTableColumn"; headerCell.title = "Image"; ObjectID = "luO-d5-HpU"; */
+"luO-d5-HpU.headerCell.title" = "Image";
+
+/* Class = "NSTextFieldCell"; title = "Filter"; ObjectID = "pR4-Ax-iCM"; */
+"pR4-Ax-iCM.title" = "Filter";
+
+/* Class = "NSButtonCell"; title = "Search"; ObjectID = "qDB-fE-CvJ"; */
+"qDB-fE-CvJ.title" = "Search";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Xcode project path"; ObjectID = "sXt-0r-xJU"; */
+"sXt-0r-xJU.placeholderString" = "Xcode project path";
+
+/* Class = "NSTextFieldCell"; title = "Settings"; ObjectID = "tTj-nO-Wnt"; */
+"tTj-nO-Wnt.title" = "Settings";
+
+/* Class = "NSButtonCell"; title = ".mm"; ObjectID = "tnm-RR-vyE"; */
+"tnm-RR-vyE.title" = ".mm";
