@@ -2,12 +2,12 @@
 /* Search */
 "Search" = "Search";
 "Searching" = "Searching...";
-"CompletedResultMessage" = "Completed - Found %ld - Size %@";
+"CompletedResultMessage" = "Complet - Found %ld - Size %@";
 
 /* Export */
 "ExportSummaryTitle" = "Unused Files in project %@\n\n";
 "ExportCompleteTitle" = "Export Complete";
-"ExportCompleteSubtitle" = "The results have been exported successfully";
+"ExportCompleteSubtitle" = "Les résultats ont été exporté avec succéss";
 "ExportErrorTitle" = "Export Error";
 "ExportErrorSubtitle" = "There was an error exporting the results";
 

@@ -274,7 +274,6 @@ extension MainWindowController: SearcherDelegate {
         // Reload
         DispatchQueue.main.async { [unowned self] in
             self.resultsTableView.reloadData()
-
         }
         
         // Scroll to the bottom
@@ -295,7 +294,7 @@ extension MainWindowController: SearcherDelegate {
             size += (pathUrl?.fileSize)!
         }
         
-        statusLabel.stringValue = "Completed Found : " + String(self.results.count) + "images - Size " + FileUtil.shared.stringFromFileSize(fileSize: Int(size))
+        statusLabel.stringValue = "Completed Found : " + String(self.results.count) + " images - Size " + FileUtil.shared.stringFromFileSize(fileSize: Int(size))
         
         // Enable the ui
         self.setUIEnabled( true)

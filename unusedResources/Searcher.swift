@@ -273,13 +273,17 @@ final class Searcher: NSObject {
             
             // Setup the call
             let folderWithFilenameAndEncoding = imageName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-            let name = URL(fileURLWithPath: folderWithFilenameAndEncoding!, isDirectory: false).deletingPathExtension().lastPathComponent
+            var name = URL(fileURLWithPath: folderWithFilenameAndEncoding!, isDirectory: false).deletingPathExtension().lastPathComponent
+            if typeExtension == "swift" {
+                name = "\"" + name + "\""
+            }
+            print(name)
             
-//            let pathNameAndEncoding = directoryPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-//            let pathName = URL(fileURLWithPath: pathNameAndEncoding!, isDirectory: true)
-
+            //            let pathNameAndEncoding = directoryPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            //            let pathName = URL(fileURLWithPath: pathNameAndEncoding!, isDirectory: true)
             
-            let cmd = "IFS=\"$(printf '\n\t')\";file=\"\(directoryPath)/\"; for filename in `find $file -name '*.\(typeExtension)'`; do cat $filename 2>/dev/null | grep -o '\(name)'; done"
+            
+            let cmd = "IFS=\"$(printf '\n\t')\";file=\"\(directoryPath)\";name='\(name)'; for filename in `find $file -name '*.\(typeExtension)'`; do cat $filename 2>/dev/null | grep -o $name; done"
             //NSString *cmd = [NSString stringWithFormat:@"for filename in `find %@ -name '*.%@'`; do cat $filename 2>/dev/null | grep -o %@ ; done", directoryPath, extension, [imageName stringByDeletingPathExtension]];
             
             print(cmd)
@@ -307,7 +311,6 @@ final class Searcher: NSObject {
                 count += 1
             }
         }
-        
         return count
     }
     
