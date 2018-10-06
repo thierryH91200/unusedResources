@@ -12,12 +12,15 @@ import Cocoa
 
 class MainWindowController: NSWindowController   {
     
-    
+    let lastFolderPath = "LastFolderPath"
+
     private let kTableColumnImageIcon = "ImageIcon"
     private let kTableColumnImageShortName = "ImageShortName"
     private let kTableColumnImageFullPath = "ImageFullPath"
-    
-    var results: [String] = []
+    private let kSelect = "Select"
+
+    var unusedData: [String] = []
+    var status = [Bool]()
     var searcher : Searcher!
     
     @IBOutlet var resultsTableView: NSTableView!
@@ -43,12 +46,11 @@ class MainWindowController: NSWindowController   {
         return  "MainWindowController"
     }
     
-    
     override func windowDidLoad() {
         super.windowDidLoad()
         
         // Setup the results array
-        results = [String]()
+        unusedData = [String]()
         
         // Setup double click
         resultsTableView.doubleAction = #selector(self.tableViewDoubleClicked)
@@ -64,6 +66,8 @@ class MainWindowController: NSWindowController   {
         searcher = Searcher()
         searcher.delegate = self
         
+        steupDefalutFolderPath()
+        
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
     
@@ -78,6 +82,8 @@ class MainWindowController: NSWindowController   {
             // Update the path text field
             let path = openPanel.directoryURL?.path
             pathTextField.stringValue = path!
+            saveToDefaultFolderPath(path: pathTextField.stringValue)
+
         }
     }
     
@@ -90,7 +96,7 @@ class MainWindowController: NSWindowController   {
             var outputResults = ""
             let projectPath = pathTextField.stringValue
             outputResults += String(format: NSLocalizedString("ExportSummaryTitle", comment: ""), projectPath)
-            for path in results {
+            for path in unusedData {
                 outputResults += "\(path )\n"
             }
             // Output
@@ -125,7 +131,7 @@ class MainWindowController: NSWindowController   {
         }
         
         // Reset
-        results.removeAll()
+        unusedData.removeAll()
         resultsTableView.reloadData()
         
         // Start the ui
@@ -161,7 +167,7 @@ class MainWindowController: NSWindowController   {
     }
     
     func scrollTableView(_ tableView: NSTableView, toBottom bottom: Bool) {
-        if bottom {
+        if bottom == true {
             let numberOfRows = tableView.numberOfRows
             if numberOfRows > 0 {
                 tableView.scrollRowToVisible((numberOfRows ) - 1)
@@ -170,6 +176,7 @@ class MainWindowController: NSWindowController   {
             tableView.scrollRowToVisible(0)
         }
     }
+    
     func setUIEnabled(_ state: Bool) {
         // Individual
         if state {
@@ -205,7 +212,7 @@ class MainWindowController: NSWindowController   {
         guard resultsTableView.clickedRow > 0 else { return }
         
         // Open finder
-        let path = results[resultsTableView.clickedRow]
+        let path = unusedData[resultsTableView.clickedRow]
         let folderWithFilenameAndEncoding: String? = path.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
         let imagePath = URL(string: folderWithFilenameAndEncoding!)!.resolvingSymlinksInPath
         
@@ -213,13 +220,71 @@ class MainWindowController: NSWindowController   {
         NSWorkspace.shared.selectFile(pathFinder, inFileViewerRootedAtPath: "")
     }
     
+    @IBAction func selectClick(_ sender: NSButton) {
+        
+
+        let row = resultsTableView.row(for: sender as NSView)
+        guard  row != -1 else { return }
+        
+        let state = sender.state
+        status[row] = state == .on
+
+    }
     
+    @IBAction func deletePressed(_ sender: Any) {
+        
+        guard self.unusedData.count != 0 else  { return }
+        
+        let data = self.unusedData
+        for i in 0 ..< data.count where status[i] == true {
+            for path in unusedData {
+                var needDeletePath = path
+                var needSkip = false
+                if path.contains("imageset") {
+                    needDeletePath = path.replacingOccurrences(of: path.components(separatedBy: "/").last!, with: "")
+                    needSkip = true
+                }
+                do {
+                    print("try to delete : " + needDeletePath)
+                    try FileManager.default.removeItem(atPath: needDeletePath)
+                } catch let error as NSError  {
+                    self.showAlert(title: "Error", subtitle: "Delete get error" + error.domain)
+                    print(error)
+                    return
+                }
+                if needSkip == true {
+                    break
+                }
+            }
+        }
+        self.startSearch(searchButton)
+    }
+    
+    func showAlert(title: String , subtitle:String) {
+        let alert = NSAlert();
+        alert.alertStyle = NSAlert.Style.informational;
+        alert.messageText = title;
+        alert.informativeText = subtitle;
+        alert.runModal();
+    }
+
+
+    func steupDefalutFolderPath() {
+        if let path = UserDefaults.standard.object(forKey: lastFolderPath) {
+            pathTextField.stringValue = path as! String
+        }
+    }
+    
+    func saveToDefaultFolderPath(path: String) {
+        UserDefaults.standard.setValue(path, forKey: lastFolderPath)
+        UserDefaults.standard.synchronize()
+    }
 }
 
 extension MainWindowController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return results.count
+        return unusedData.count
     }
     
 }
@@ -232,12 +297,11 @@ extension MainWindowController: NSTableViewDelegate {
             let id = column.identifier
             if let cellView = tableView.makeView(withIdentifier: id, owner: self) as? NSTableCellView {
                 
-                let pngPath = results[row]
+                let pngPath = unusedData[row]
                 
                 if column.identifier.rawValue == kTableColumnImageIcon {
                     let folderWithFilenameAndEncoding: String? = pngPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
                     let imagePath = URL(string: folderWithFilenameAndEncoding!)
-                    
                     
                     let image = NSImage(byReferencing : imagePath!)
                     cellView.imageView?.image = image
@@ -255,6 +319,14 @@ extension MainWindowController: NSTableViewDelegate {
                     return cellView
                 }
             }
+            if let cellView = tableView.makeView(withIdentifier: id, owner: self) as? SelectCellView {
+                if column.identifier.rawValue == kSelect {
+                    cellView.select.state = .off
+                    return cellView
+                }
+
+            }
+
         }
         return nil
     }
@@ -269,7 +341,7 @@ extension MainWindowController: SearcherDelegate {
     
     func searcher( didFindUnusedImage imagePath: String?) {
         // Add and reload
-        results.append(imagePath ?? "")
+        unusedData.append(imagePath ?? "")
         
         // Reload
         DispatchQueue.main.async { [unowned self] in
@@ -284,17 +356,19 @@ extension MainWindowController: SearcherDelegate {
         
         // Ensure all data is displayed
         resultsTableView.reloadData()
+        status.removeAll()
         
         // Calculate how much file size we saved and update the label
         var size = UInt64(0)
-        for path in self.results {
+        for path in self.unusedData {
             let folderWithFilenameAndEncoding: String? = path.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
             let pathUrl = URL(string: folderWithFilenameAndEncoding!)
             
             size += (pathUrl?.fileSize)!
+            status.append(false)
         }
         
-        statusLabel.stringValue = "Completed Found : " + String(self.results.count) + " images - Size " + FileUtil.shared.stringFromFileSize(fileSize: Int(size))
+        statusLabel.stringValue = "Completed Found : " + String(self.unusedData.count) + " images - Size " + FileUtil.shared.stringFromFileSize(fileSize: Int(size))
         
         // Enable the ui
         self.setUIEnabled( true)
@@ -320,5 +394,16 @@ extension URL {
     }
 }
 
+final class SelectCellView: NSTableCellView {
+    
+    @IBOutlet weak var select: NSButton!
+}
 
+extension NSUserInterfaceItemIdentifier {
+    static let ImageIcon       = NSUserInterfaceItemIdentifier("ImageIcon")
+    static let ImageShortName       = NSUserInterfaceItemIdentifier("ImageShortName")
+    static let ImageFullPath         = NSUserInterfaceItemIdentifier("ImageFullPath")
+    static let Select         = NSUserInterfaceItemIdentifier("Select")
+    
+}
 

@@ -46,7 +46,6 @@ final class Searcher: NSObject {
         return ["@2x", "@3x"]
     }
     
-    
     override init() {
         super.init()
         
@@ -277,11 +276,6 @@ final class Searcher: NSObject {
             if typeExtension == "swift" {
                 name = "\"" + name + "\""
             }
-            print(name)
-            
-            //            let pathNameAndEncoding = directoryPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-            //            let pathName = URL(fileURLWithPath: pathNameAndEncoding!, isDirectory: true)
-            
             
             let cmd = "IFS=\"$(printf '\n\t')\";file=\"\(directoryPath)\";name='\(name)'; for filename in `find $file -name '*.\(typeExtension)'`; do cat $filename 2>/dev/null | grep -o $name; done"
             //NSString *cmd = [NSString stringWithFormat:@"for filename in `find %@ -name '*.%@'`; do cat $filename 2>/dev/null | grep -o %@ ; done", directoryPath, extension, [imageName stringByDeletingPathExtension]];
