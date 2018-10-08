@@ -10,6 +10,7 @@
                 <outlet property="browseButton" destination="OGi-OO-5vb" id="K33-5e-0wo"/>
                 <outlet property="cppCheckbox" destination="vXz-Y1-HFb" id="UmH-fX-F82"/>
                 <outlet property="cssCheckbox" destination="tkq-Wa-QDZ" id="Mb8-cW-QjB"/>
+                <outlet property="deleteButton" destination="yoZ-eu-abc" id="nRR-LT-D5j"/>
                 <outlet property="enumCheckbox" destination="TeH-ez-PVp" id="y7k-wc-zR9"/>
                 <outlet property="exportButton" destination="qGa-tT-kd4" id="8Qi-xe-H7M"/>
                 <outlet property="headerCheckbox" destination="b7T-xJ-h4g" id="auT-d3-aT1"/>
@@ -447,7 +448,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yoZ-eu-abc">
+                    <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yoZ-eu-abc">
                         <rect key="frame" x="734" y="5" width="80" height="32"/>
                         <buttonCell key="cell" type="push" title="Delete" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fhS-4h-TX9">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

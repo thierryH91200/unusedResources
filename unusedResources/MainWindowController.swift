@@ -10,14 +10,25 @@
 
 import Cocoa
 
-class MainWindowController: NSWindowController   {
+final class MainWindowController: NSWindowController   {
     
     let lastFolderPath = "LastFolderPath"
+    
+    let cppCheck       = "cppCheck"
+    let cssCheck       = "cssCheck"
+    let headerCheck    = "headerCheck"
+    let htmlCheck      = "htmlCheck"
+    let mCheck         = "mCheck"
+    let mmCheck        = "mmCheck"
+    let plistCheck     = "plistCheck"
+    let sbCheck        = "sbCheck"
+    let swiftCheck     = "swiftCheck"
+    let xibCheck       = "xibCheck"
 
-    private let kTableColumnImageIcon = "ImageIcon"
-    private let kTableColumnImageShortName = "ImageShortName"
-    private let kTableColumnImageFullPath = "ImageFullPath"
-    private let kSelect = "Select"
+    let kTableColumnImageIcon = "ImageIcon"
+    let kTableColumnImageShortName = "ImageShortName"
+    let kTableColumnImageFullPath = "ImageFullPath"
+    let kSelect = "Select"
 
     var unusedData: [String] = []
     var status = [Bool]()
@@ -30,17 +41,20 @@ class MainWindowController: NSWindowController   {
     @IBOutlet var pathTextField: NSTextField!
     @IBOutlet var searchButton: NSButton!
     @IBOutlet var exportButton: NSButton!
-    @IBOutlet var mCheckbox: NSButton!
-    @IBOutlet var xibCheckbox: NSButton!
-    @IBOutlet var sbCheckbox: NSButton!
+    
     @IBOutlet var cppCheckbox: NSButton!
+    @IBOutlet var cssCheckbox: NSButton!
     @IBOutlet var headerCheckbox: NSButton!
     @IBOutlet var htmlCheckbox: NSButton!
+    @IBOutlet var mCheckbox: NSButton!
     @IBOutlet var mmCheckbox: NSButton!
     @IBOutlet var plistCheckbox: NSButton!
-    @IBOutlet var cssCheckbox: NSButton!
+    @IBOutlet var sbCheckbox: NSButton!
     @IBOutlet var swiftCheckbox: NSButton!
+    @IBOutlet var xibCheckbox: NSButton!
+    
     @IBOutlet var enumCheckbox: NSButton!
+    @IBOutlet weak var deleteButton: NSButton!
     
     override var windowNibName: NSNib.Name? {
         return  "MainWindowController"
@@ -66,7 +80,7 @@ class MainWindowController: NSWindowController   {
         searcher = Searcher()
         searcher.delegate = self
         
-        steupDefalutFolderPath()
+        setupDefaultFolderPath()
         
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
@@ -82,8 +96,7 @@ class MainWindowController: NSWindowController   {
             // Update the path text field
             let path = openPanel.directoryURL?.path
             pathTextField.stringValue = path!
-            saveToDefaultFolderPath(path: pathTextField.stringValue)
-
+            saveToDefaultFolderPath()
         }
     }
     
@@ -205,6 +218,7 @@ class MainWindowController: NSWindowController   {
         browseButton.isEnabled = state
         pathTextField.isEnabled = state
         exportButton.isHidden = !state
+        deleteButton.isHidden = !state
     }
     
     @objc func tableViewDoubleClicked() {
@@ -268,142 +282,37 @@ class MainWindowController: NSWindowController   {
         alert.runModal();
     }
 
-
-    func steupDefalutFolderPath() {
+    func setupDefaultFolderPath() {
         if let path = UserDefaults.standard.object(forKey: lastFolderPath) {
             pathTextField.stringValue = path as! String
+            
+            cppCheckbox.state = UserDefaults.standard.bool(forKey: cppCheck) ? .on : .off
+            cssCheckbox.state = UserDefaults.standard.bool(forKey: cssCheck) ? .on : .off
+            headerCheckbox.state = UserDefaults.standard.bool(forKey: headerCheck) ? .on : .off
+            htmlCheckbox.state = UserDefaults.standard.bool(forKey: htmlCheck) ? .on : .off
+            mCheckbox.state = UserDefaults.standard.bool(forKey: mCheck) ? .on : .off
+            mmCheckbox.state = UserDefaults.standard.bool(forKey: mmCheck) ? .on : .off
+            plistCheckbox.state = UserDefaults.standard.bool(forKey: plistCheck) ? .on : .off
+            sbCheckbox.state = UserDefaults.standard.bool(forKey: sbCheck) ? .on : .off
+            swiftCheckbox.state = UserDefaults.standard.bool(forKey: swiftCheck) ? .on : .off
+            xibCheckbox.state = UserDefaults.standard.bool(forKey: xibCheck) ? .on : .off
         }
     }
     
-    func saveToDefaultFolderPath(path: String) {
-        UserDefaults.standard.setValue(path, forKey: lastFolderPath)
+    func saveToDefaultFolderPath() {
+        UserDefaults.standard.setValue(pathTextField.stringValue , forKey: lastFolderPath)
+        
+        UserDefaults.standard.setValue(cppCheckbox.state == . on, forKey: cppCheck)
+        UserDefaults.standard.setValue(cssCheckbox.state == . on, forKey: cssCheck)
+        UserDefaults.standard.setValue(headerCheckbox.state == . on, forKey: headerCheck)
+        UserDefaults.standard.setValue(htmlCheckbox.state == . on, forKey: htmlCheck)
+        UserDefaults.standard.setValue(mCheckbox.state == . on, forKey: mCheck)
+        UserDefaults.standard.setValue(mmCheckbox.state == . on, forKey: mmCheck)
+        UserDefaults.standard.setValue(plistCheckbox.state == . on, forKey: plistCheck)
+        UserDefaults.standard.setValue(sbCheckbox.state == . on, forKey: sbCheck)
+        UserDefaults.standard.setValue(swiftCheckbox.state == . on, forKey: swiftCheck)
+        UserDefaults.standard.setValue(xibCheckbox.state == . on, forKey: xibCheck)
         UserDefaults.standard.synchronize()
     }
-}
-
-extension MainWindowController: NSTableViewDataSource {
-    
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return unusedData.count
-    }
-    
-}
-
-extension MainWindowController: NSTableViewDelegate {
-    
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        
-        if let column = tableColumn {
-            let id = column.identifier
-            if let cellView = tableView.makeView(withIdentifier: id, owner: self) as? NSTableCellView {
-                
-                let pngPath = unusedData[row]
-                
-                if column.identifier.rawValue == kTableColumnImageIcon {
-                    let folderWithFilenameAndEncoding: String? = pngPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-                    let imagePath = URL(string: folderWithFilenameAndEncoding!)
-                    
-                    let image = NSImage(byReferencing : imagePath!)
-                    cellView.imageView?.image = image
-                    return cellView
-                }
-                if column.identifier.rawValue == kTableColumnImageShortName {
-                    let folderWithFilenameAndEncoding: String? = pngPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-                    let imagePath = URL(string: folderWithFilenameAndEncoding!)
-                    
-                    cellView.textField?.stringValue = imagePath?.lastPathComponent ?? "defaut"
-                    return cellView
-                }
-                if column.identifier.rawValue == kTableColumnImageFullPath {
-                    cellView.textField?.stringValue = pngPath
-                    return cellView
-                }
-            }
-            if let cellView = tableView.makeView(withIdentifier: id, owner: self) as? SelectCellView {
-                if column.identifier.rawValue == kSelect {
-                    cellView.select.state = .off
-                    return cellView
-                }
-
-            }
-
-        }
-        return nil
-    }
-    
-}
-
-extension MainWindowController: SearcherDelegate {
-    
-    // MARK: - <SearcherDelegate>
-    public func searcherDidStartSearch() {
-    }
-    
-    func searcher( didFindUnusedImage imagePath: String?) {
-        // Add and reload
-        unusedData.append(imagePath ?? "")
-        
-        // Reload
-        DispatchQueue.main.async { [unowned self] in
-            self.resultsTableView.reloadData()
-        }
-        
-        // Scroll to the bottom
-        scrollTableView(resultsTableView, toBottom: true)
-    }
-    
-    func searcher( didFinishSearch results: [String]) {
-        
-        // Ensure all data is displayed
-        resultsTableView.reloadData()
-        status.removeAll()
-        
-        // Calculate how much file size we saved and update the label
-        var size = UInt64(0)
-        for path in self.unusedData {
-            let folderWithFilenameAndEncoding: String? = path.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-            let pathUrl = URL(string: folderWithFilenameAndEncoding!)
-            
-            size += (pathUrl?.fileSize)!
-            status.append(false)
-        }
-        
-        statusLabel.stringValue = "Completed Found : " + String(self.unusedData.count) + " images - Size " + FileUtil.shared.stringFromFileSize(fileSize: Int(size))
-        
-        // Enable the ui
-        self.setUIEnabled( true)
-    }
-}
-
-extension URL {
-    var attributes: [FileAttributeKey : Any]? {
-        do {
-            return try FileManager.default.attributesOfItem(atPath: path)
-        } catch let error as NSError {
-            print("FileAttribute error: \(error)")
-        }
-        return nil
-    }
-    
-    var fileSize: UInt64 {
-        return attributes?[.size] as? UInt64 ?? UInt64(0)
-    }
-    
-    var creationDate: Date? {
-        return attributes?[.creationDate] as? Date
-    }
-}
-
-final class SelectCellView: NSTableCellView {
-    
-    @IBOutlet weak var select: NSButton!
-}
-
-extension NSUserInterfaceItemIdentifier {
-    static let ImageIcon       = NSUserInterfaceItemIdentifier("ImageIcon")
-    static let ImageShortName       = NSUserInterfaceItemIdentifier("ImageShortName")
-    static let ImageFullPath         = NSUserInterfaceItemIdentifier("ImageFullPath")
-    static let Select         = NSUserInterfaceItemIdentifier("Select")
-    
 }
 

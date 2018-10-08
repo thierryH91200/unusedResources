@@ -57,7 +57,6 @@ class FileUtil: NSObject {
     func searchDirectory(_ directoryPath: String?, forFiletype filetype: String) -> [String]? {
         
         // Create a find task
-        
         let task = Process()
         task.launchPath = "/usr/bin/find"
         
@@ -66,12 +65,12 @@ class FileUtil: NSObject {
         task.arguments = (argvals as! [String])
         let pipe = Pipe()
         task.standardOutput = pipe
-        let file: FileHandle = pipe.fileHandleForReading
         
         // Run task
         task.launch()
         
         // Read the response
+        let file = pipe.fileHandleForReading
         let data = file.readDataToEndOfFile()
         let string = String(data: data, encoding: .utf8)
         

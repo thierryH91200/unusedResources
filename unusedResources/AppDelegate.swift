@@ -23,6 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
+        mainWindowController?.saveToDefaultFolderPath()
         // Insert code here to tear down your application
     }
     

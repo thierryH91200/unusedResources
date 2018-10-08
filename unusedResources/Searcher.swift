@@ -11,7 +11,7 @@ import AppKit
 @objc public protocol SearcherDelegate
 {
     func searcherDidStartSearch()
-    func searcher( didFindUnusedImage imagePath: String?)
+    func searcher( didFindUnusedImage imagePath: String)
     func searcher( didFinishSearch results: [String])
 }
 
@@ -64,9 +64,6 @@ final class Searcher: NSObject {
     }
     
     func start() {
-        // Start the search
-        //        let searchOperation = NSInvocationOperation(target: self, selector: #selector(self.runImageSearch(_:)), object: projectPath)
-        //        queue.add(searchOperation)
         self.runImageSearch( projectPath)
     }
     
@@ -87,7 +84,6 @@ final class Searcher: NSObject {
         
         if enumFilter == true {
             var mutablePngFiles = imageFiles
-            
             
             // Trying to filter image names like: "Section_0.png", "Section_1.png", etc
             //(these names can possibly be created by [NSString stringWithFormat:@"Section_%d", (int)] constructions) to just "Section_" item
@@ -130,16 +126,6 @@ final class Searcher: NSObject {
             }
         }
         
-        //        var queue = DispatchQueue.global(qos: .default)
-        //        var group = DispatchGroup()
-        
-        // Now loop and check
-        //        [imageFiles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        //            dispatch_group_async(group, queue, ^{
-        
-        //        var queue = DispatchQueue.global(qos: .default)
-        //        var group = DispatchGroup()
-        
         DispatchQueue.global(qos: .background).async {
             print("This is run on the background queue")
             for imageFile in imageFiles where imageFile != "" {
@@ -173,10 +159,8 @@ final class Searcher: NSObject {
                             self.delegate?.searcher( didFindUnusedImage: strFile)
                         }
                     }
-                    
                 }
             }
-            
             
             DispatchGroup().notify(queue: DispatchQueue.main) {
                 DispatchQueue.main.async {
@@ -184,23 +168,10 @@ final class Searcher: NSObject {
                     self.delegate?.searcher( didFinishSearch: self.results)
                     self.fileData.removeAll()
                     self.isSearching = false
-                    
                 }
             }
         }
         
-        
-        //        DispatchQueue.global(qos: .background).async {
-        //            print("This is run on the background queue")
-        //            self.delegate?.searcher( didFinishSearch: self.results)
-        //            self.fileData.removeAll()
-        //            self.isSearching = false
-        //
-        //
-        //            DispatchQueue.main.async {
-        //                print("This is run on the main queue, after the previous code in outer block")
-        //            }
-        //        }
     }
     
     var searchSettings : [String] {
@@ -271,8 +242,8 @@ final class Searcher: NSObject {
             task.launchPath = "/bin/sh"
             
             // Setup the call
-            let folderWithFilenameAndEncoding = imageName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-            var name = URL(fileURLWithPath: folderWithFilenameAndEncoding!, isDirectory: false).deletingPathExtension().lastPathComponent
+//            let folderWithFilenameAndEncoding = imageName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            var name = URL(fileURLWithPath: imageName, isDirectory: false).deletingPathExtension().lastPathComponent
             if typeExtension == "swift" {
                 name = "\"" + name + "\""
             }
@@ -280,7 +251,7 @@ final class Searcher: NSObject {
             let cmd = "IFS=\"$(printf '\n\t')\";file=\"\(directoryPath)\";name='\(name)'; for filename in `find $file -name '*.\(typeExtension)'`; do cat $filename 2>/dev/null | grep -o $name; done"
             //NSString *cmd = [NSString stringWithFormat:@"for filename in `find %@ -name '*.%@'`; do cat $filename 2>/dev/null | grep -o %@ ; done", directoryPath, extension, [imageName stringByDeletingPathExtension]];
             
-            print(cmd)
+ //           print(cmd)
             
             let argvals = ["-c", cmd]
             task.arguments = argvals
@@ -307,6 +278,5 @@ final class Searcher: NSObject {
         }
         return count
     }
-    
     
 }

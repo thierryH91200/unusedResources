@@ -19,6 +19,7 @@
 		03702DA2216770700014CB2E /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03702DA4216770700014CB2E /* MainWindowController.xib */; };
 		03702DB02167CA8A0014CB2E /* CaptureEcran1.png in Resources */ = {isa = PBXBuildFile; fileRef = 03702DAF2167CA8A0014CB2E /* CaptureEcran1.png */; };
 		03702DB32167CCA80014CB2E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 03702DB22167CCA80014CB2E /* README.md */; };
+		03A5D323216A4B8A00827849 /* MainWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A5D322216A4B8A00827849 /* MainWindowExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		03702DA8216770790014CB2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainWindowController.strings; sourceTree = "<group>"; };
 		03702DAF2167CA8A0014CB2E /* CaptureEcran1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CaptureEcran1.png; sourceTree = "<group>"; };
 		03702DB22167CCA80014CB2E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		03A5D322216A4B8A00827849 /* MainWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				0300B0782163B14B00F19655 /* MainWindowController.swift */,
 				0300B07B2163BAAC00F19655 /* Searcher.swift */,
 				0300B07D2163C5EF00F19655 /* FileUtil.swift */,
+				03A5D322216A4B8A00827849 /* MainWindowExtension.swift */,
 			);
 			path = unusedResources;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				0300B04E2163B0EA00F19655 /* AppDelegate.swift in Sources */,
 				0300B07C2163BAAC00F19655 /* Searcher.swift in Sources */,
 				0300B07E2163C5EF00F19655 /* FileUtil.swift in Sources */,
+				03A5D323216A4B8A00827849 /* MainWindowExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
