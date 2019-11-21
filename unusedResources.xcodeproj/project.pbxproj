@@ -63,6 +63,7 @@
 		03702DA8216770790014CB2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainWindowController.strings; sourceTree = "<group>"; };
 		03702DAF2167CA8A0014CB2E /* CaptureEcran1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CaptureEcran1.png; sourceTree = "<group>"; };
 		03702DB22167CCA80014CB2E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		037D401F2386D577005144D4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		03A5D322216A4B8A00827849 /* MainWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,16 +118,16 @@
 			isa = PBXGroup;
 			children = (
 				0300B04D2163B0EA00F19655 /* AppDelegate.swift */,
-				03702D9F21676F4A0014CB2E /* Localizable.strings */,
 				0300B04F2163B0EB00F19655 /* Assets.xcassets */,
-				0300B0512163B0EB00F19655 /* MainMenu.xib */,
-				0300B0542163B0EB00F19655 /* Info.plist */,
-				0300B0552163B0EB00F19655 /* unusedResources.entitlements */,
-				03702DA4216770700014CB2E /* MainWindowController.xib */,
-				0300B0782163B14B00F19655 /* MainWindowController.swift */,
-				0300B07B2163BAAC00F19655 /* Searcher.swift */,
 				0300B07D2163C5EF00F19655 /* FileUtil.swift */,
+				0300B0542163B0EB00F19655 /* Info.plist */,
+				03702D9F21676F4A0014CB2E /* Localizable.strings */,
+				0300B0512163B0EB00F19655 /* MainMenu.xib */,
+				0300B0782163B14B00F19655 /* MainWindowController.swift */,
+				03702DA4216770700014CB2E /* MainWindowController.xib */,
 				03A5D322216A4B8A00827849 /* MainWindowExtension.swift */,
+				0300B07B2163BAAC00F19655 /* Searcher.swift */,
+				0300B0552163B0EB00F19655 /* unusedResources.entitlements */,
 			);
 			path = unusedResources;
 			sourceTree = "<group>";
@@ -167,6 +168,7 @@
 				0300B0462163B0EA00F19655 /* Sources */,
 				0300B0472163B0EA00F19655 /* Frameworks */,
 				0300B0482163B0EA00F19655 /* Resources */,
+				037D401D2386D522005144D4 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -220,11 +222,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = thierryH24;
 				TargetAttributes = {
 					0300B0492163B0EA00F19655 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1120;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -233,10 +236,12 @@
 					};
 					0300B0592163B0EB00F19655 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1120;
 						TestTargetID = 0300B0492163B0EA00F19655;
 					};
 					0300B0642163B0EB00F19655 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1120;
 						TestTargetID = 0300B0492163B0EA00F19655;
 					};
 				};
@@ -292,6 +297,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		037D401D2386D522005144D4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xattr -cr .\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0300B0462163B0EA00F19655 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -342,6 +367,7 @@
 			children = (
 				0300B0522163B0EB00F19655 /* Base */,
 				03702DA021676F600014CB2E /* fr */,
+				037D401F2386D577005144D4 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -427,6 +453,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -482,6 +509,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -489,8 +517,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 84WLNJ2YG4;
 				INFOPLIST_FILE = unusedResources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -498,7 +529,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thierry24100..unusedResources;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -506,16 +537,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 84WLNJ2YG4;
 				INFOPLIST_FILE = unusedResources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thierry24100..unusedResources;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thierry24100.unusedResources;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -534,7 +568,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thierry24100..unusedResourcesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/unusedResources.app/Contents/MacOS/unusedResources";
 			};
 			name = Debug;
@@ -554,7 +588,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thierry24100..unusedResourcesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/unusedResources.app/Contents/MacOS/unusedResources";
 			};
 			name = Release;
@@ -573,7 +607,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thierry24100..unusedResourcesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = unusedResources;
 			};
 			name = Debug;
@@ -592,7 +626,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thierry24100..unusedResourcesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = unusedResources;
 			};
 			name = Release;

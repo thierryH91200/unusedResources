@@ -29,8 +29,8 @@ class FileUtil: NSObject {
         return String(format: "%1.1f GB", floatSize)
     }
     
-    func imageFiles(inDirectory directoryPath: String?) -> [String]? {
-        var images: [String] = []
+    func imageFiles(inDirectory directoryPath: String) -> [String] {
+        var images = [String]()
         // jpg
         let jpg = self.searchDirectory(directoryPath, forFiletype: "jpg")
         if let aJpg = jpg {

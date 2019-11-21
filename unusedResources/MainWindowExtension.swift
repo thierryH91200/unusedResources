@@ -23,12 +23,21 @@ extension MainWindowController: NSTableViewDelegate {
         
         if let column = tableColumn {
             let id = column.identifier
+            
+            if let cellView = tableView.makeView(withIdentifier: id, owner: self) as? SelectCellView {
+                if column.identifier.rawValue == kSelect {
+                    cellView.select.state = .off
+                    return cellView
+                }
+                
+            }
+
             if let cellView = tableView.makeView(withIdentifier: id, owner: self) as? NSTableCellView {
                 
                 let pngPath = unusedData[row]
                 
                 if column.identifier.rawValue == kTableColumnImageIcon {
-                    let folderWithFilenameAndEncoding: String? = pngPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+                    let folderWithFilenameAndEncoding = pngPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                     let imagePath = URL(string: folderWithFilenameAndEncoding!)
                     
                     let image = NSImage(byReferencing : imagePath!)
@@ -36,7 +45,7 @@ extension MainWindowController: NSTableViewDelegate {
                     return cellView
                 }
                 if column.identifier.rawValue == kTableColumnImageShortName {
-                    let folderWithFilenameAndEncoding: String? = pngPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+                    let folderWithFilenameAndEncoding = pngPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                     let imagePath = URL(string: folderWithFilenameAndEncoding!)
                     
                     cellView.textField?.stringValue = imagePath?.lastPathComponent ?? "defaut"
@@ -46,13 +55,6 @@ extension MainWindowController: NSTableViewDelegate {
                     cellView.textField?.stringValue = pngPath
                     return cellView
                 }
-            }
-            if let cellView = tableView.makeView(withIdentifier: id, owner: self) as? SelectCellView {
-                if column.identifier.rawValue == kSelect {
-                    cellView.select.state = .off
-                    return cellView
-                }
-                
             }
             
         }
@@ -96,7 +98,10 @@ extension MainWindowController: SearcherDelegate {
             status.append(false)
         }
         
-        statusLabel.stringValue = "Completed Found : " + String(self.unusedData.count) + " images - Size " + FileUtil.shared.stringFromFileSize(fileSize: Int(size))
+        let time: TimeInterval = Date().timeIntervalSince(startTime!)
+        print(time)
+
+        statusLabel.stringValue = "Completed Found : " + String(self.unusedData.count) +  String(format: " Time : %.2fs: ", arguments: [time]) + " images - Size " + FileUtil.shared.stringFromFileSize(fileSize: Int(size))
         
         // Enable the ui
         self.setUIEnabled( true)
@@ -128,10 +133,9 @@ final class SelectCellView: NSTableCellView {
 }
 
 extension NSUserInterfaceItemIdentifier {
-    static let ImageIcon       = NSUserInterfaceItemIdentifier("ImageIcon")
-    static let ImageShortName       = NSUserInterfaceItemIdentifier("ImageShortName")
-    static let ImageFullPath         = NSUserInterfaceItemIdentifier("ImageFullPath")
+    static let ImageIcon      = NSUserInterfaceItemIdentifier("ImageIcon")
+    static let ImageShortName = NSUserInterfaceItemIdentifier("ImageShortName")
+    static let ImageFullPath  = NSUserInterfaceItemIdentifier("ImageFullPath")
     static let Select         = NSUserInterfaceItemIdentifier("Select")
-    
 }
 

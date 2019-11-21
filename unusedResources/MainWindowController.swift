@@ -34,6 +34,8 @@ final class MainWindowController: NSWindowController   {
     var status = [Bool]()
     var searcher : Searcher!
     
+    var startTime: Date?
+    
     @IBOutlet var resultsTableView: NSTableView!
     @IBOutlet var processIndicator: NSProgressIndicator!
     @IBOutlet var statusLabel: NSTextField!
@@ -94,7 +96,7 @@ final class MainWindowController: NSWindowController   {
         let okButtonPressed = openPanel.runModal() == .OK
         if okButtonPressed {
             // Update the path text field
-            let path = openPanel.directoryURL?.path
+            let path = openPanel.url?.path
             pathTextField.stringValue = path!
             saveToDefaultFolderPath()
         }
@@ -129,6 +131,9 @@ final class MainWindowController: NSWindowController   {
     }
     
     @IBAction func startSearch(_ sender: Any) {
+        
+        startTime = Date()
+        
         // Check if user has selected or entered a path
         let projectPath = pathTextField.stringValue
 
@@ -168,6 +173,7 @@ final class MainWindowController: NSWindowController   {
         
         // Start the search
         searcher.start()
+        
     }
     
     // MARK: - Helpers

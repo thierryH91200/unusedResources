@@ -77,7 +77,7 @@ final class Searcher: NSObject {
         delegate?.searcherDidStartSearch()
         
         // Find all the image files in the folder
-        projectImageFiles = FileUtil.shared.imageFiles(inDirectory: searchPath)!
+        projectImageFiles = FileUtil.shared.imageFiles(inDirectory: searchPath)
         
         // Find all the image files in the folder
         var imageFiles = projectImageFiles
@@ -116,8 +116,7 @@ final class Searcher: NSObject {
             let supportedRetina = supportedRetinaImagePostfixes
             for retinaRangeString in supportedRetina {
                 
-                let retinaRange: NSRange? = (imageName as NSString?)?.range(of: retinaRangeString )
-                
+                let retinaRange = (imageName as NSString?)?.range(of: retinaRangeString )
                 if Int(retinaRange?.location ?? 0) != NSNotFound {
                     // Add to retina image paths
                     retinaImagePaths.append(projectImageFile )
@@ -128,10 +127,12 @@ final class Searcher: NSObject {
         
         DispatchQueue.global(qos: .background).async {
             print("This is run on the background queue")
+            
+            let startTime = Date()
             for imageFile in imageFiles where imageFile != "" {
                 
                 let strFile = "file://" +  imageFile
-                let folderWithFilenameAndEncoding: String? = strFile.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+                let folderWithFilenameAndEncoding = strFile.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 
                 let imagePath = URL(string: folderWithFilenameAndEncoding!)
                 
@@ -146,13 +147,17 @@ final class Searcher: NSObject {
                     let settingsItems = self.searchSettings
                     var isSearchCancelled = false
                     
+                    let startTime = Date()
                     for ext in settingsItems {
                         
                         // Run the check
-                        if isSearchCancelled == false  && self.occurancesOfImageNamed(imageName, atDirectory: searchPath, inFileExtensionType: ext) > 0 {
+                        if isSearchCancelled == false  && self.occurancesOfImageNamed(imageName, directoryPath: searchPath, typeExtension: ext) > 0 {
                             isSearchCancelled = true
                         }
                     }
+                    let time: TimeInterval = Date().timeIntervalSince(startTime)
+                    print(time)
+
                     
                     if isSearchCancelled == false {
                         DispatchQueue.main.async { [unowned self] in
@@ -161,7 +166,9 @@ final class Searcher: NSObject {
                     }
                 }
             }
-            
+            let time: TimeInterval = Date().timeIntervalSince(startTime)
+            print(time)
+
             DispatchGroup().notify(queue: DispatchQueue.main) {
                 DispatchQueue.main.async {
                     print("This is run on the main queue, after the previous code in outer block")
@@ -232,17 +239,13 @@ final class Searcher: NSObject {
         return !(isThirdPartyBundle && isNamedDefault && isNamedIcon && isUniversalImage)
     }
     
-    func occurancesOfImageNamed(_ imageName: String, atDirectory directoryPath: String, inFileExtensionType typeExtension: String) -> Int {
+    func occurancesOfImageNamed(_ imageName: String,  directoryPath: String,  typeExtension: String) -> Int {
         
         fileDataLock = NSLock()
         var data = fileData[directoryPath] as? Data
         if data == nil {
             
-            let task = Process()
-            task.launchPath = "/bin/sh"
-            
             // Setup the call
-//            let folderWithFilenameAndEncoding = imageName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
             var name = URL(fileURLWithPath: imageName, isDirectory: false).deletingPathExtension().lastPathComponent
             if typeExtension == "swift" {
                 name = "\"" + name + "\""
@@ -253,15 +256,17 @@ final class Searcher: NSObject {
             
  //           print(cmd)
             
+            let process = Process()
+            process.launchPath = "/bin/sh"
+
             let argvals = ["-c", cmd]
-            task.arguments = argvals
+            process.arguments = argvals
             let pipe = Pipe()
-            task.standardOutput = pipe
-            task.launch()
+            process.standardOutput = pipe
+            process.launch()
             
             // Read the response
-            let file = pipe.fileHandleForReading
-            data = file.readDataToEndOfFile()
+            data = pipe.fileHandleForReading.readDataToEndOfFile()
             let key = "\(directoryPath )/\(imageName )"
             fileData[key] = data
         }
